@@ -1,0 +1,13 @@
+title = "hookdistill gitleaks config"
+
+[extend]
+useDefault = true
+
+# The examples and tests plant a FAKE token to prove reports redact secrets.
+[allowlist]
+description = "synthetic fixtures"
+paths = [
+  '''^examples/''',
+  '''^cmd/hookdistill/e2e_test\.go$''',
+  '''^internal/report/report_test\.go$''',
+]
