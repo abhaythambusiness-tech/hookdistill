@@ -1,0 +1,6 @@
+{"type":"user","sessionId":"s2","timestamp":"2026-11-02T10:00:00Z","message":{"role":"user","content":"hello"}}
+{"type":"assistant","sessionId":"s2","timestamp":"2026-11-02T10:00:01Z","message":{"role":"assis
+{"type":"attachment","sessionId":"s2","timestamp":"2026-11-02T10:00:02Z","attachment":{"x":1}}
+{"type":"future-type","sessionId":"s2"}
+{"type":"user","sessionId":"s2","timestamp":"2026-11-02T10:00:03Z","message":{"role":"user","content":5}}
+{"type":"assistant","sessionId":"s2","timestamp":"2026-11-02T10:00:04Z","message":{"role":"assistant","content":[{"type":"tool_use","id":"t9","name":"Bash","input":{"command":"ls"}}]}}
