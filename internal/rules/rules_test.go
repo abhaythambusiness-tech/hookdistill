@@ -91,3 +91,10 @@ func TestMatches(t *testing.T) {
 		}
 	}
 }
+
+func TestNewIDStable(t *testing.T) {
+	a := NewID("Bash", "git commit -am")
+	if a != NewID("Bash", "git commit -am") || a == NewID("Edit", "git commit -am") || !strings.HasPrefix(a, "c-") || len(a) != 10 {
+		t.Fatalf("id=%q", a)
+	}
+}

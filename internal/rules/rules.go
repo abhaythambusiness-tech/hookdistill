@@ -5,6 +5,8 @@ package rules
 import (
 	"bufio"
 	"bytes"
+	"crypto/sha1"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -120,4 +122,11 @@ func (r Rule) Matches(tool, subject string) bool {
 	}
 	re := compiled(r.Patron)
 	return re != nil && re.MatchString(subject)
+}
+
+// NewID returns a stable rule id ("c-" + 8 hex chars) derived from the tool
+// and pattern, so the same candidate keeps the same id across scans.
+func NewID(herramienta, patron string) string {
+	sum := sha1.Sum([]byte(herramienta + "\x00" + patron))
+	return "c-" + hex.EncodeToString(sum[:])[:8]
 }
