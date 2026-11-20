@@ -11,9 +11,9 @@ Nada de esto se ha publicado ni empujado. Publicar de cara al exterior no se des
 | 4 | Demo en vivo | ➖ | Previsto para v0.2 (no está en v0.1). |
 | 5 | Licencia | ✅ | MIT (`LICENSE`, confirmada por Haytham). |
 | 6 | Temas | 👤 | Al crear el repo: `claude-code`, `hooks`, `claude-md`, `golang`, `cli`, `developer-tools`. |
-| 7 | Imagen social | 🟡 | `assets/social.svg` 1280×640. Falta convertirlo a PNG (no había `rsvg-convert`) y subirlo en Settings → Social preview. 👤 |
+| 7 | Imagen social | 🟡 | `assets/social.png` 1280×640 (renderizado desde `assets/social.svg` y revisado). 👤 Falta subirlo en Settings → Social preview. |
 | 8 | CI en verde | 🟡 | Workflows escritos y con YAML válido; `actionlint`, `goreleaser` y `gitleaks` no estaban instalados, así que **no se han ejecutado**. Solo se sabrá tras el primer push. 👤 |
-| 9 | Sin secretos en Git | 🟡 | Historial local: un solo autor falso (`dev@hookdistill.invalid`), sin cadenas tipo token fuera de los datos de prueba falsos (están en `.gitleaks.toml` como excepción). Gitleaks corre en CI. Antes del push, cambiar la identidad git del repo (ver abajo). |
+| 9 | Sin secretos en Git | 🟡 | Historial local: un solo autor (`abhaythambusiness-tech <abhaythambusiness@gmail.com>`), sin cadenas tipo token fuera de los datos de prueba falsos (están en `.gitleaks.toml` como excepción). Gitleaks corre en CI. Antes del push, borrar las ramas de copia (`old-master-haytham`, `backup-before-author-rewrite`, `rewrite-abhay`) y empujar solo `master`/`main`: las copias llevan otros correos. |
 | 10 | Good first issues | 👤 | 5 redactadas en `docs/launch/good-first-issues.md`; las publica Haytham con la etiqueta `good first issue`. |
 | 11 | CONTRIBUTING | ✅ | `CONTRIBUTING.md`: compilar, probar, añadir una marca de corrección. |
 | 12 | Plantillas y Discussions | 🟡 | Plantillas de bug e idea y `config.yml` hechos. 👤 Activar Discussions (Settings → Features); el enlace de `config.yml` apunta a ellas. |
@@ -24,9 +24,8 @@ Nada de esto se ha publicado ni empujado. Publicar de cara al exterior no se des
 
 ## Pasos de Haytham, en orden
 
-1. **Identidad git:** el repo usa una identidad local falsa (`hookdistill dev <dev@hookdistill.invalid>`).
-   Decide con qué nombre y correo quieres que aparezcan los commits (el correo real queda público en
-   cada commit). Para cambiar los commits ya hechos hay que reescribir el historial: es decisión tuya.
+1. ✅ **Identidad git:** hecho. Los 17 commits y la config local usan `abhaythambusiness-tech`
+   / `abhaythambusiness@gmail.com` (ese correo queda público en cada commit al empujar).
 2. **Rama:** la rama local se llama `master`; el README y el CI esperan `main` (el CI acepta las dos,
    el `curl` del README solo `main`).
 3. **Crear el repo remoto** `abhaythambusiness-tech/hookdistill` (ese es el usuario de `gh` que está en
