@@ -80,3 +80,12 @@ func TestRunMergesProjectAndGlobalRules(t *testing.T) {
 		t.Fatalf("block must win: code=%d out=%q err=%q", code, out, errs)
 	}
 }
+
+func TestRunEvaluatesEachRuleIDOnce(t *testing.T) {
+	r := rule("c-1", "warn", "git commit -am", "careful")
+	f1, f2 := ruleFile(t, r), ruleFile(t, r)
+	_, out, _ := call(bashCommit, f1, f2, f1)
+	if out != string(warnOutput("careful")) {
+		t.Fatalf("warning repeated or missing: %q", out)
+	}
+}

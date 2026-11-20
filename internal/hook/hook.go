@@ -49,6 +49,7 @@ func Run(stdin io.Reader, stdout, stderr io.Writer, ruleFiles []string) int {
 	subject := call.Subject()
 
 	var warns []string
+	seen := map[string]bool{} // the same rule id from a second file (or the same file twice) counts once
 	for _, f := range ruleFiles {
 		rs, err := rules.Load(f)
 		if err != nil {
@@ -60,9 +61,10 @@ func Run(stdin io.Reader, stdout, stderr io.Writer, ruleFiles []string) int {
 				fmt.Fprintf(stderr, "hookdistill: ignoring invalid rule: %v\n", err)
 				continue
 			}
-			if !r.Matches(call.Tool, subject) {
+			if seen[r.ID] || !r.Matches(call.Tool, subject) {
 				continue
 			}
+			seen[r.ID] = true
 			if r.Action == "block" {
 				fmt.Fprintf(stderr, "hookdistill: blocked by rule %s: %s\n", r.ID, r.Message)
 				return 2
