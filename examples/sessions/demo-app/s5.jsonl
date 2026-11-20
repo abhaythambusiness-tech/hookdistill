@@ -1,0 +1,8 @@
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-02T10:01:00Z", "isSidechain": false, "message": {"role": "user", "content": "commit this"}}
+{"type": "assistant", "sessionId": "s5", "timestamp": "2026-11-03T10:02:00Z", "isSidechain": false, "message": {"role": "assistant", "content": [{"type": "text", "text": "ok"}, {"type": "tool_use", "id": "t1", "name": "Bash", "input": {"command": "git commit -am 'x'"}}]}}
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-04T10:03:00Z", "isSidechain": false, "message": {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "t2", "content": "done"}]}}
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-05T10:04:00Z", "isSidechain": false, "message": {"role": "user", "content": "no, do not do that; my token is ghp_0123456789abcdefghijklmnopqrstuvwxyz use it to push"}}
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-06T10:05:00Z", "isSidechain": false, "message": {"role": "user", "content": "fix the schema"}}
+{"type": "assistant", "sessionId": "s5", "timestamp": "2026-11-07T10:06:00Z", "isSidechain": false, "message": {"role": "assistant", "content": [{"type": "text", "text": "ok"}, {"type": "tool_use", "id": "t5", "name": "Edit", "input": {"file_path": "/app/migrations/005_users.sql"}}]}}
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-08T10:07:00Z", "isSidechain": false, "message": {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "t6", "content": "done"}]}}
+{"type": "user", "sessionId": "s5", "timestamp": "2026-11-09T10:08:00Z", "isSidechain": false, "message": {"role": "user", "content": "do not touch migrations again"}}

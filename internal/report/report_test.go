@@ -110,3 +110,18 @@ func TestScanReportsSkippedLines(t *testing.T) {
 		t.Fatalf("out:\n%s", out.String())
 	}
 }
+
+func TestScanDoesNotCallMatchesViolations(t *testing.T) {
+	root := writeHistory(t, "no, do not do that")
+	md := filepath.Join(t.TempDir(), "CLAUDE.md")
+	if err := os.WriteFile(md, []byte("- Never run `git commit -am`.\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	if err := Scan(root, md, &out); err != nil {
+		t.Fatal(err)
+	}
+	if s := out.String(); strings.Contains(s, "broken") || !strings.Contains(s, "matched 3 past calls in 2 sessions") {
+		t.Fatalf("wording:\n%s", s)
+	}
+}

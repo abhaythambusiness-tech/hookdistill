@@ -54,7 +54,7 @@ func claudeMDSection(path string, ss []transcript.Session, w io.Writer) error {
 	}
 	fmt.Fprintf(w, "\nCLAUDE.md rules: %d convertible, %d not convertible\n", len(conv), len(notConv))
 	for _, c := range conv {
-		fmt.Fprintf(w, "  convertible  %s /%s/  broken %d times in %d sessions\n", c.Rule.ID, Redact(c.Rule.Patron), c.Count, c.Sessions)
+		fmt.Fprintf(w, "  convertible  %s /%s/  matched %d past calls in %d sessions (run replay to check they were mistakes)\n", c.Rule.ID, Redact(c.Rule.Patron), c.Count, c.Sessions)
 	}
 	for _, n := range notConv {
 		fmt.Fprintf(w, "  not convertible  line %d (%s): %s\n", n.Line, n.Reason, Redact(n.Text))
