@@ -1,0 +1,8 @@
+hookdistill
+/hookdistill
+dist/
+*.jsonl
+!examples/**/*.jsonl
+!internal/**/testdata/*.jsonl
+.env
+.superpowers/
