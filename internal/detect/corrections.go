@@ -144,14 +144,14 @@ func Corrections(ss []transcript.Session) []Candidate {
 			Count:    len(g.ev),
 			Sessions: len(g.sessions),
 			Rule: rules.Rule{
-				ID:          rules.NewID(g.tool, g.pattern),
-				Evento:      "PreToolUse",
-				Herramienta: g.tool,
-				Patron:      g.pattern,
-				Accion:      "warn",
-				Origen:      "correccion",
-				Mensaje:     fmt.Sprintf("You corrected this action %d times (%d sessions). Check before repeating it.", len(g.ev), len(g.sessions)),
-				Evidencia:   ev,
+				ID:       rules.NewID(g.tool, g.pattern),
+				Event:    "PreToolUse",
+				Tool:     g.tool,
+				Pattern:  g.pattern,
+				Action:   "warn",
+				Origin:   "correction",
+				Message:  fmt.Sprintf("You corrected this action %d times (%d sessions). Check before repeating it.", len(g.ev), len(g.sessions)),
+				Evidence: ev,
 			},
 		})
 	}

@@ -70,13 +70,13 @@ func ClaudeMD(path string, ss []transcript.Session) ([]Candidate, []NotConvertib
 
 func claudeMDCandidate(line int, text, frag string, ss []transcript.Session) Candidate {
 	r := rules.Rule{
-		ID:          rules.NewID("Bash", regexp.QuoteMeta(frag)),
-		Evento:      "PreToolUse",
-		Herramienta: "Bash",
-		Patron:      regexp.QuoteMeta(frag),
-		Accion:      "warn",
-		Origen:      "CLAUDE.md",
-		Mensaje:     fmt.Sprintf("CLAUDE.md line %d: %s", line, text),
+		ID:      rules.NewID("Bash", regexp.QuoteMeta(frag)),
+		Event:   "PreToolUse",
+		Tool:    "Bash",
+		Pattern: regexp.QuoteMeta(frag),
+		Action:  "warn",
+		Origin:  "CLAUDE.md",
+		Message: fmt.Sprintf("CLAUDE.md line %d: %s", line, text),
 	}
 	seen := map[string]bool{}
 	count := 0
@@ -87,8 +87,8 @@ func claudeMDCandidate(line int, text, frag string, ss []transcript.Session) Can
 			}
 			count++
 			seen[s.ID] = true
-			if len(r.Evidencia) < maxEvidence {
-				r.Evidencia = append(r.Evidencia, rules.Evidence{Session: s.ID, Seq: c.Seq})
+			if len(r.Evidence) < maxEvidence {
+				r.Evidence = append(r.Evidence, rules.Evidence{Session: s.ID, Seq: c.Seq})
 			}
 		}
 	}

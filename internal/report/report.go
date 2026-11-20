@@ -36,8 +36,8 @@ func Scan(root, claudeMDPath string, w io.Writer) error {
 	cands := detect.Corrections(ss)
 	fmt.Fprintf(w, "Repeated corrections (>=3 times in >=2 sessions): %d\n", len(cands))
 	for _, c := range cands {
-		fmt.Fprintf(w, "  %s  %s /%s/  corrected %d times in %d sessions\n", c.Rule.ID, c.Rule.Herramienta, Redact(c.Rule.Patron), c.Count, c.Sessions)
-		for _, e := range c.Rule.Evidencia {
+		fmt.Fprintf(w, "  %s  %s /%s/  corrected %d times in %d sessions\n", c.Rule.ID, c.Rule.Tool, Redact(c.Rule.Pattern), c.Count, c.Sessions)
+		for _, e := range c.Rule.Evidence {
 			fmt.Fprintf(w, "    evidence %s:%d  %q\n", short(e.Session), e.Seq, snippet(ss, e.Session, e.Seq))
 		}
 	}
@@ -54,7 +54,7 @@ func claudeMDSection(path string, ss []transcript.Session, w io.Writer) error {
 	}
 	fmt.Fprintf(w, "\nCLAUDE.md rules: %d convertible, %d not convertible\n", len(conv), len(notConv))
 	for _, c := range conv {
-		fmt.Fprintf(w, "  convertible  %s /%s/  matched %d past calls in %d sessions (run replay to check they were mistakes)\n", c.Rule.ID, Redact(c.Rule.Patron), c.Count, c.Sessions)
+		fmt.Fprintf(w, "  convertible  %s /%s/  matched %d past calls in %d sessions (run replay to check they were mistakes)\n", c.Rule.ID, Redact(c.Rule.Pattern), c.Count, c.Sessions)
 	}
 	for _, n := range notConv {
 		fmt.Fprintf(w, "  not convertible  line %d (%s): %s\n", n.Line, n.Reason, Redact(n.Text))

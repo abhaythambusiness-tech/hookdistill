@@ -41,7 +41,7 @@ func Replay(r rules.Rule, ss []transcript.Session) []Hit {
 	return out
 }
 
-// Promote returns r with Accion "block", unless any hit is marked legitimate:
+// Promote returns r with Action "block", unless any hit is marked legitimate:
 // a rule that would have blocked work you wanted must stay a warning.
 func Promote(r rules.Rule, hits []Hit, legit map[string]bool) (rules.Rule, error) {
 	for _, h := range hits {
@@ -49,6 +49,6 @@ func Promote(r rules.Rule, hits []Hit, legit map[string]bool) (rules.Rule, error
 			return r, fmt.Errorf("replay: rule %s would have blocked a legitimate call (%s: %s); keeping it as warn", r.ID, h.ID, h.Subject)
 		}
 	}
-	r.Accion = "block"
+	r.Action = "block"
 	return r, nil
 }

@@ -22,14 +22,14 @@ type Evidence struct {
 }
 
 type Rule struct {
-	ID          string     `json:"id"`
-	Evento      string     `json:"evento"`
-	Herramienta string     `json:"herramienta"`
-	Patron      string     `json:"patron"`
-	Accion      string     `json:"accion"`
-	Mensaje     string     `json:"mensaje"`
-	Origen      string     `json:"origen"`
-	Evidencia   []Evidence `json:"evidencia,omitempty"`
+	ID       string     `json:"id"`
+	Event    string     `json:"event"`
+	Tool     string     `json:"tool"`
+	Pattern  string     `json:"pattern"`
+	Action   string     `json:"action"`
+	Message  string     `json:"message"`
+	Origin   string     `json:"origin"`
+	Evidence []Evidence `json:"evidence,omitempty"`
 }
 
 // Load reads a rules file. A missing file is not an error: it returns nil.
@@ -87,15 +87,15 @@ func (r Rule) Validate() error {
 	switch {
 	case r.ID == "":
 		return errors.New("rule has no id")
-	case r.Evento != "PreToolUse":
-		return fmt.Errorf("rule %s: evento must be PreToolUse, got %q", r.ID, r.Evento)
-	case r.Accion != "warn" && r.Accion != "block":
-		return fmt.Errorf("rule %s: accion must be warn or block, got %q", r.ID, r.Accion)
-	case r.Patron == "":
-		return fmt.Errorf("rule %s: patron is empty", r.ID)
+	case r.Event != "PreToolUse":
+		return fmt.Errorf("rule %s: event must be PreToolUse, got %q", r.ID, r.Event)
+	case r.Action != "warn" && r.Action != "block":
+		return fmt.Errorf("rule %s: action must be warn or block, got %q", r.ID, r.Action)
+	case r.Pattern == "":
+		return fmt.Errorf("rule %s: pattern is empty", r.ID)
 	}
-	if _, err := regexp.Compile(r.Patron); err != nil {
-		return fmt.Errorf("rule %s: invalid patron: %w", r.ID, err)
+	if _, err := regexp.Compile(r.Pattern); err != nil {
+		return fmt.Errorf("rule %s: invalid pattern: %w", r.ID, err)
 	}
 	return nil
 }
@@ -112,21 +112,21 @@ func compiled(p string) *regexp.Regexp {
 }
 
 // Matches reports whether the rule applies to this tool call. An empty or "*"
-// Herramienta means any tool. An empty or invalid pattern never matches.
+// Tool means any tool. An empty or invalid pattern never matches.
 func (r Rule) Matches(tool, subject string) bool {
-	if r.Herramienta != "" && r.Herramienta != "*" && r.Herramienta != tool {
+	if r.Tool != "" && r.Tool != "*" && r.Tool != tool {
 		return false
 	}
-	if r.Patron == "" {
+	if r.Pattern == "" {
 		return false
 	}
-	re := compiled(r.Patron)
+	re := compiled(r.Pattern)
 	return re != nil && re.MatchString(subject)
 }
 
 // NewID returns a stable rule id ("c-" + 8 hex chars) derived from the tool
 // and pattern, so the same candidate keeps the same id across scans.
-func NewID(herramienta, patron string) string {
-	sum := sha1.Sum([]byte(herramienta + "\x00" + patron))
+func NewID(tool, pattern string) string {
+	sum := sha1.Sum([]byte(tool + "\x00" + pattern))
 	return "c-" + hex.EncodeToString(sum[:])[:8]
 }

@@ -63,11 +63,11 @@ func Run(stdin io.Reader, stdout, stderr io.Writer, ruleFiles []string) int {
 			if !r.Matches(call.Tool, subject) {
 				continue
 			}
-			if r.Accion == "block" {
-				fmt.Fprintf(stderr, "hookdistill: blocked by rule %s: %s\n", r.ID, r.Mensaje)
+			if r.Action == "block" {
+				fmt.Fprintf(stderr, "hookdistill: blocked by rule %s: %s\n", r.ID, r.Message)
 				return 2
 			}
-			warns = append(warns, r.Mensaje)
+			warns = append(warns, r.Message)
 		}
 	}
 	if len(warns) > 0 {

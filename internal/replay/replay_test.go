@@ -12,7 +12,7 @@ func bash(session string, seq int, cmd string, side bool) transcript.ToolCall {
 }
 
 func rule() rules.Rule {
-	return rules.Rule{ID: "c-1", Evento: "PreToolUse", Herramienta: "Bash", Patron: `git commit -am`, Accion: "warn", Origen: "correccion", Mensaje: "m"}
+	return rules.Rule{ID: "c-1", Event: "PreToolUse", Tool: "Bash", Pattern: `git commit -am`, Action: "warn", Origin: "correction", Message: "m"}
 }
 
 func history() []transcript.Session {
@@ -40,7 +40,7 @@ func TestPromoteRefusesWhenLegit(t *testing.T) {
 	r := rule()
 	hits := Replay(r, history())
 	out, err := Promote(r, hits, map[string]bool{"zz:2": true})
-	if err == nil || out.Accion == "block" || r.Accion != "warn" {
+	if err == nil || out.Action == "block" || r.Action != "warn" {
 		t.Fatalf("out=%+v err=%v orig=%+v", out, err, r)
 	}
 }
@@ -48,7 +48,7 @@ func TestPromoteRefusesWhenLegit(t *testing.T) {
 func TestPromoteOK(t *testing.T) {
 	r := rule()
 	out, err := Promote(r, Replay(r, history()), nil)
-	if err != nil || out.Accion != "block" || r.Accion != "warn" {
+	if err != nil || out.Action != "block" || r.Action != "warn" {
 		t.Fatalf("out=%+v err=%v orig=%+v", out, err, r)
 	}
 }

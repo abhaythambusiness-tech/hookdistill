@@ -16,16 +16,16 @@ func TestClaudeMDConvertible(t *testing.T) {
 	}
 	var found bool
 	for _, c := range cands {
-		if c.Rule.Patron == `git push --force` || c.Rule.Patron == `git push \-\-force` {
+		if c.Rule.Pattern == `git push --force` || c.Rule.Pattern == `git push \-\-force` {
 			found = true
-			if c.Rule.Origen != "CLAUDE.md" || c.Rule.Herramienta != "Bash" || c.Rule.Accion != "warn" || c.Rule.Evento != "PreToolUse" {
+			if c.Rule.Origin != "CLAUDE.md" || c.Rule.Tool != "Bash" || c.Rule.Action != "warn" || c.Rule.Event != "PreToolUse" {
 				t.Fatalf("rule=%+v", c.Rule)
 			}
 			if err := c.Rule.Validate(); err != nil {
 				t.Fatal(err)
 			}
 			if !c.Rule.Matches("Bash", "git push --force origin main") || c.Rule.Matches("Bash", "git push origin main") {
-				t.Fatalf("pattern %q", c.Rule.Patron)
+				t.Fatalf("pattern %q", c.Rule.Pattern)
 			}
 		}
 	}
@@ -74,8 +74,8 @@ func TestClaudeMDCountsViolations(t *testing.T) {
 	}
 	for _, c := range cands {
 		if c.Rule.Matches("Bash", "git push --force") {
-			if c.Count != 2 || c.Sessions != 2 || len(c.Rule.Evidencia) != 2 {
-				t.Fatalf("count=%d sessions=%d ev=%d", c.Count, c.Sessions, len(c.Rule.Evidencia))
+			if c.Count != 2 || c.Sessions != 2 || len(c.Rule.Evidence) != 2 {
+				t.Fatalf("count=%d sessions=%d ev=%d", c.Count, c.Sessions, len(c.Rule.Evidence))
 			}
 			return
 		}

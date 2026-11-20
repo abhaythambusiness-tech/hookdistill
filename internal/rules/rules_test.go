@@ -10,15 +10,15 @@ import (
 
 func sample() Rule {
 	return Rule{
-		ID: "c-1", Evento: "PreToolUse", Herramienta: "Bash", Patron: `git commit -am`,
-		Accion: "warn", Mensaje: "Do not use commit -am", Origen: "correccion",
-		Evidencia: []Evidence{{Session: "s1", Seq: 4}},
+		ID: "c-1", Event: "PreToolUse", Tool: "Bash", Pattern: `git commit -am`,
+		Action: "warn", Message: "Do not use commit -am", Origin: "correction",
+		Evidence: []Evidence{{Session: "s1", Seq: 4}},
 	}
 }
 
 func TestRoundTrip(t *testing.T) {
 	p := filepath.Join(t.TempDir(), ".claude", "hookdistill.rules.json")
-	in := []Rule{sample(), {ID: "c-2", Evento: "PreToolUse", Herramienta: "*", Patron: "rm -rf", Accion: "block", Mensaje: "no", Origen: "CLAUDE.md"}}
+	in := []Rule{sample(), {ID: "c-2", Event: "PreToolUse", Tool: "*", Pattern: "rm -rf", Action: "block", Message: "no", Origin: "CLAUDE.md"}}
 	if err := Save(p, in); err != nil {
 		t.Fatal(err)
 	}
@@ -50,7 +50,7 @@ func TestLoadBadLineReportsLineNumber(t *testing.T) {
 
 func TestValidateRejectsBadRegex(t *testing.T) {
 	r := sample()
-	r.Patron = "("
+	r.Pattern = "("
 	if r.Validate() == nil {
 		t.Fatal("expected error for invalid regex")
 	}
@@ -58,7 +58,7 @@ func TestValidateRejectsBadRegex(t *testing.T) {
 
 func TestValidateRejectsBadAction(t *testing.T) {
 	r := sample()
-	r.Accion = "delete"
+	r.Action = "delete"
 	if r.Validate() == nil {
 		t.Fatal("expected error for invalid action")
 	}
@@ -80,10 +80,10 @@ func TestMatches(t *testing.T) {
 		{"bash match", sample(), "Bash", "git commit -am 'x'", true},
 		{"other tool", sample(), "Edit", "git commit -am", false},
 		{"no match", sample(), "Bash", "git commit -m 'x'", false},
-		{"wildcard tool", Rule{Herramienta: "*", Patron: "secret"}, "Read", "/tmp/secret.txt", true},
-		{"empty tool means any", Rule{Patron: "secret"}, "Write", "/tmp/secret.txt", true},
-		{"empty pattern never matches", Rule{Herramienta: "*"}, "Bash", "ls", false},
-		{"invalid regex never matches", Rule{Herramienta: "*", Patron: "("}, "Bash", "(", false},
+		{"wildcard tool", Rule{Tool: "*", Pattern: "secret"}, "Read", "/tmp/secret.txt", true},
+		{"empty tool means any", Rule{Pattern: "secret"}, "Write", "/tmp/secret.txt", true},
+		{"empty pattern never matches", Rule{Tool: "*"}, "Bash", "ls", false},
+		{"invalid regex never matches", Rule{Tool: "*", Pattern: "("}, "Bash", "(", false},
 	}
 	for _, c := range cases {
 		if got := c.r.Matches(c.tool, c.subject); got != c.want {

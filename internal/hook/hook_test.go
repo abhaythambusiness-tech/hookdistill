@@ -19,8 +19,8 @@ func ruleFile(t *testing.T, rs ...rules.Rule) string {
 	return p
 }
 
-func rule(id, accion, patron, msg string) rules.Rule {
-	return rules.Rule{ID: id, Evento: "PreToolUse", Herramienta: "Bash", Patron: patron, Accion: accion, Mensaje: msg, Origen: "correccion"}
+func rule(id, action, pattern, msg string) rules.Rule {
+	return rules.Rule{ID: id, Event: "PreToolUse", Tool: "Bash", Pattern: pattern, Action: action, Message: msg, Origin: "correction"}
 }
 
 const bashCommit = `{"tool_name":"Bash","tool_input":{"command":"git commit -am wip"}}`

@@ -17,14 +17,14 @@ func TestCorrectionsClusters(t *testing.T) {
 		t.Fatalf("candidates=%d want 1: %+v", len(got), got)
 	}
 	c := got[0]
-	if c.Count != 3 || c.Sessions != 2 || c.Rule.Origen != "correccion" || c.Rule.Accion != "warn" || c.Rule.Herramienta != "Bash" {
+	if c.Count != 3 || c.Sessions != 2 || c.Rule.Origin != "correction" || c.Rule.Action != "warn" || c.Rule.Tool != "Bash" {
 		t.Fatalf("candidate=%+v", c)
 	}
 	if !c.Rule.Matches("Bash", "git commit -am 'wip'") || c.Rule.Matches("Bash", "git commit -m 'wip'") {
-		t.Fatalf("pattern %q should match -am but not -m", c.Rule.Patron)
+		t.Fatalf("pattern %q should match -am but not -m", c.Rule.Pattern)
 	}
-	if err := c.Rule.Validate(); err != nil || len(c.Rule.Evidencia) != 3 {
-		t.Fatalf("validate=%v evidence=%d", err, len(c.Rule.Evidencia))
+	if err := c.Rule.Validate(); err != nil || len(c.Rule.Evidence) != 3 {
+		t.Fatalf("validate=%v evidence=%d", err, len(c.Rule.Evidence))
 	}
 }
 
@@ -33,11 +33,11 @@ func TestCorrectionsFileTool(t *testing.T) {
 		call("Edit", "/p/migrations/002.sql"), say("stop editing migrations"))
 	b := mkSession("b", say("fix"), call("Edit", "/p/migrations/003.sql"), say("I said never edit those"))
 	got := Corrections([]transcript.Session{a, b})
-	if len(got) != 1 || got[0].Rule.Herramienta != "Edit" {
+	if len(got) != 1 || got[0].Rule.Tool != "Edit" {
 		t.Fatalf("got=%+v", got)
 	}
 	if !got[0].Rule.Matches("Edit", "/p/migrations/009.sql") || got[0].Rule.Matches("Edit", "/p/src/a.go") {
-		t.Fatalf("pattern %q", got[0].Rule.Patron)
+		t.Fatalf("pattern %q", got[0].Rule.Pattern)
 	}
 }
 
