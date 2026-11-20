@@ -1,0 +1,19 @@
+name: Idea
+description: Suggest something hookdistill should do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you keep correcting or repeating?
+      description: Describe the situation, not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like hookdistill to do about it?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you do today instead?

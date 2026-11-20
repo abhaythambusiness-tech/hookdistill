@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="hookdistill: turn the corrections you keep repeating into hooks, tested against your own history">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#0b2a2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <text x="80" y="170" fill="#f0f6fc" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="96" font-weight="800">hookdistill</text>
+  <text x="80" y="240" fill="#8b949e" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34">Turn the corrections you keep repeating</text>
+  <text x="80" y="285" fill="#8b949e" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34">to Claude Code into hooks, tested on your history.</text>
+
+  <rect x="80" y="340" width="1120" height="190" rx="14" fill="#010409" stroke="#30363d"/>
+  <circle cx="108" cy="366" r="6" fill="#ff5f56"/><circle cx="130" cy="366" r="6" fill="#ffbd2e"/><circle cx="152" cy="366" r="6" fill="#27c93f"/>
+  <g font-family="'DejaVu Sans Mono', Menlo, Consolas, monospace" font-size="24">
+    <text x="108" y="418" fill="#c9d1d9">$ hookdistill replay c-3902ca48</text>
+    <text x="108" y="454" fill="#7ee787">  5 hits over 6 sessions: git commit -am ...</text>
+    <text x="108" y="490" fill="#8b949e">$ hookdistill promote c-3902ca48</text>
+  </g>
+
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#2dd4bf">
+    <text x="80" y="590">One Go binary</text>
+    <text x="360" y="590">Offline</text>
+    <text x="560" y="590">No tokens spent</text>
+    <text x="900" y="590" fill="#8b949e">MIT</text>
+  </g>
+</svg>
