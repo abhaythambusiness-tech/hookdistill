@@ -12,10 +12,11 @@ import (
 
 // Hit is one past tool call the rule would have matched.
 type Hit struct {
-	ID, Session string
-	Seq         int
-	Tool        string
-	Subject     string
+	ID      string `json:"id"`
+	Session string `json:"session"`
+	Seq     int    `json:"seq"`
+	Tool    string `json:"tool"`
+	Subject string `json:"subject"`
 }
 
 // HitID builds the short id users reference when marking a hit legitimate.
