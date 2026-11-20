@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -75,7 +76,8 @@ func TestInstallPreservesOtherHooksAndKeys(t *testing.T) {
 	if !strings.Contains(string(raw), "12345678901234567890") {
 		t.Fatalf("big number mangled: %s", raw)
 	}
-	if st, _ := os.Stat(p); st.Mode().Perm() != 0o600 {
+	// Windows has no unix permission bits.
+	if st, _ := os.Stat(p); runtime.GOOS != "windows" && st.Mode().Perm() != 0o600 {
 		t.Fatalf("mode=%v", st.Mode())
 	}
 }
